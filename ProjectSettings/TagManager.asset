@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - ground
+  - bullet
+  - ghost
+  - greenenemy
+  - redenemy
+  - health
+  - score2
+  - score
+  - Dpart
+  - missle
+  - gamemanager
+  - audiomanager
+  - playersaudio
+  - ground2
+  - playerfeettag
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - enemy
+  - Water
+  - UI
+  - player
+  - bullet
+  - pickUps
+  - igoner
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: heart
+    uniqueID: 2456848129
+    locked: 0
