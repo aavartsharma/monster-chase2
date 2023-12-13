@@ -29,15 +29,32 @@ public class audiomanager : MonoBehaviour
             a.source.loop = a.loop;
         }
     }
-
     void Start()
+    {
+        if(gamemanger.instance.settingList[0] == "1")
+        {
+            play("bg");
+        }
+    }
+
+    public void stopthebg()
+    {
+        stop("bg");
+    }
+
+    public void playthbg()
     {
         play("bg");
     }
 
-    void dstopthebg()
+    public void resumethebg()
     {
-        stop("bg");
+        resume("bg");
+    }
+
+    public void pausethebg()
+    {
+        pause("bg");
     }
 
     public void play(string name)
@@ -60,5 +77,27 @@ public class audiomanager : MonoBehaviour
             return;
         }
         a.source.Stop();
+    }
+
+    public void resume(string name)
+    {
+        audio a = Array.Find(audios,audio => audio.name == name);
+        if(a ==null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found.");
+            return;
+        }
+        a.source.UnPause();
+    }
+
+    public void pause(string name)
+    {
+        audio a = Array.Find(audios,audio => audio.name == name);
+        if(a == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found.");
+            return;
+        }
+        a.source.Pause();
     }
 }

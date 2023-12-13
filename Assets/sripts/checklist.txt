@@ -16,18 +16,18 @@ CHECKLIST
 +	14.) ui clips on the top of screen
 +	15.) make pause menu
 +	16.) make a main menu
-	16.) make game more optimized 
-	17.) multiplayer
++	16.) make game more optimized 
+-	17.) multiplayer
 +	18.) better toturial starting point
 +	19.) in-game currency
-	20.) different diffculty levels
-	21.) custom HUD
-	22.) better code of player script
++	20.) different diffculty levels
+-	21.) custom HUD
++	22.) better code of player script
 -	23.) delete useless assest
 +	24.) button for shooting
 -	25.) player deid animation is slow
 +	26.) second player animation and more
-	27.) anylitics,ads,multiplayer
+-	27.) anylitics,ads,multiplayer
 -	28.) add the websites url
 +	29.) the rocket ui blocks the touch on the rocket gameobject 
 +	30.) make a manual that will include all the information of enemys
@@ -41,19 +41,19 @@ CHECKLIST
 -	38.) tap on left side of screen will make the joystick follow (only for shoot button)
 +	39.) make easy to climb the ground (0ne solution is to add doublejump)
 +	40.) deid black bar ui
--	41.) missile logic
++	41.) missile logic
 +	42.) game manager
 +	43.) sounds to the pause menu
--	44.) missile logic
++	44.) missile logic
 +	45.) add a effector to that player so the enemy get little bit away from the player
 -	46.) add Double jump
 +	47.) remove the other sound 
 +	48.) make a rewarding formula for the game and inplmant it
-	49.) missile is going doward and not coming to the player
-	50.) 
-	51.)
-	52.) 
-	53.) 
++	49.) missile is going doward and not coming to the player
+-	50.) make bullet skin
++	51.) add quit game broad
+-	52.) player should we reward to come in the no go ground
+	53.) for rateing
 	54.)
 
 
@@ -66,25 +66,26 @@ other scenes
 	+	3.) animation on MM
 	+	4.) add all the scene changer in the buttons
 	+	5.) make space for the manual in the opition
-		6.) make a player stats and add it to MM
+	-	6.) make a player stats and add it to MM
 
 	2.) manual
-		1.) plyer will see only the enemy he has seen
-		2.) make there description
+	-	1.) plyer will see only the enemy he has seen
+	+	2.) make there description
 	+	3.) make a boxes for each of the enemy
-		4.) add logic to the gameobjects 
-		5.) add meaningfull text
+	+	4.) add logic to the gameobjects 
+	+	5.) add meaningfull text
 
 	3.) store
-		1.) black player will be unlocked when he have (currency) 5000 and the player has highscore of 1500
+	-	1.) black player will be unlocked when he have (currency) 5000 and the player has highscore of 1500
 	+	2.) players will be changed here only
 	+	3.) add logic to the gameobjects 
 
 	4.) toturial
-		1.) player will expernice this scene when starting the game for the first time 
-		2.) make all the instraction that should be given to the player
-		3.) make a pop up question to player does he need a toturial if no make the maingame next scene
-		4.) add logic to the gameobjects 
+	+	1.) player will expernice this scene when starting the game for the first time 
+	+	2.) make all the instraction that should be given to the player
+	-	3.) make a pop up question to player does he need a toturial if no make the maingame next scene
+	+	4.) add logic to the gameobjects 
+	-	5.) button sitting crashes the tutorail
 
 	5.) sittings
 		1.) add this all
@@ -92,4 +93,40 @@ other scenes
 		+	2.) vol of the game
 		+	3.) button or slider
 		+	4.) duffculty level
-			5.) add a costom HUD section
+		-	5.) add a costom HUD section
+
+
+
+analytics
+
+	1.) main manu
+		1.) opition button pressed
+		2.) 
+	
+	2.) playgame
+		1.) count the jumps
+		2.) time played
+		3.) time bullet fired 
+		4.) score player scored(100+,500+,1000+,2500+,5000+,10000+) + diffculty level
+		5.) bit earned(10+,50+,100+,150+,250+,500+,1000+) + diffculty level
+		6.) hight reached(10+,100+,250+,500+,1000+,2500+) + diffculty level
+		7.) enemy killed(1+,10+,15+,30+,50+,100+) + diffculty level
+		8.) how many time preesed restart
+		9.) how many times exit to mainmenu 
+		10.) pick ups hitted
+	
+	3.) store
+		1.) how many pleyer have bought
+		2.)	player skin	
+	
+	4.) tutorail
+		1.) how many times the player played the tutorail
+		
+	5.) manual
+		1.) how many time the player opened
+
+	6.) settings
+		1.) the dict of the setting
+	
+	7.) others
+	

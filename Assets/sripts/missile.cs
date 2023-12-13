@@ -13,16 +13,23 @@ public class missile : MonoBehaviour
     [SerializeField] private Vector3 diritiontothepoint;
     private Transform player;
     private playermover playerscript;
+    private Rigidbody2D rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag(playerstag).transform;
         playerscript = GameObject.FindWithTag(playerstag).GetComponent<playermover>();
-        if(playerscript.Deid)
-        {
-            Destroy(gameObject);
-        }
-        transform.up = player.position - transform.position;
-        diritiontothepoint = (player.position - transform.position).normalized;
+        Vector2 direcition = (player.position - transform.position).normalized;
+        diritiontothepoint = direcition;
+        transform.up = direcition;
+
+
+        // if(playerscript.Deid)
+        // {
+        //     Destroy(gameObject);
+        // }
+        // transform.up = player.position - transform.position;
+        // diritiontothepoint = (player.position - transform.position).normalized;
     }
     void FixedUpdate()
     {
@@ -30,7 +37,8 @@ public class missile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        transform.position = Vector2.MoveTowards(transform.position,diritiontothepoint,movementspeed * Time.deltaTime);
+        rb.AddForce(transform.up * movementspeed * Time.fixedDeltaTime);
+        // transform.position = Vector2.MoveTowards(transform.position,diritiontothepoint,movementspeed * Time.deltaTime);
         if(transform.position == diritiontothepoint)
         {
             GameObject s =Instantiate(hittingeffect,transform.position,Quaternion.identity);

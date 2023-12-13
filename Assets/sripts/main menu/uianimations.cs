@@ -16,6 +16,18 @@ public class uianimations : MonoBehaviour
         b1.SetActive(false);
     }
 
+    void bothbulletsoff()
+    {
+        b1.SetActive(false);
+        b2.SetActive(false);
+    }
+
+    void bothbulletson()
+    {
+        b1.SetActive(true);
+        b2.SetActive(true);
+    }
+
     void reoff()
     {
         re.SetActive(false);

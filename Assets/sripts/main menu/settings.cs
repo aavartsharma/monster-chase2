@@ -11,119 +11,116 @@ public class settings : MonoBehaviour
     [SerializeField] private Toggle manualtoggle;
     [SerializeField] private Toggle buttontoggle;
     [SerializeField] private TMP_Dropdown diffcultyDD;
-    float delay = 0;
+    [SerializeField] private Button savebutton;
+    [SerializeField] private Dictionary<string,string> settingdict = new Dictionary<string,string>();
     void Awake()
     {
-        /*PlayerPrefs.SetInt("bgmusic",1); // this is a bool
-        PlayerPrefs.SetInt("soundlevel",100);
-        PlayerPrefs.SetInt("shootingway",1); // this a bool
-        PlayerPrefs.SetInt("diffculty",1);
+        applythesetting();
+        /*PlayerPrefs.SetString("bgmusic","1"); // this is a bool
+        PlayerPrefs.SetString("soundlevel","100");
+        PlayerPrefs.SetString("shootingway","b"); // this a bool
+        PlayerPrefs.SetString("diffculty","Easy");
         PlayerPrefs.Save();*/
     }
     void Start()
     {
-        bgtoggle.isOn = (PlayerPrefs.GetInt("bgmusic",1) != 0);
-        soundslider.value = PlayerPrefs.GetInt("soundlevel",100);
-        if((PlayerPrefs.GetInt("shootingway",1) == 0))
+        savebutton.onClick.AddListener(() => {
+            savethesitting();
+        });
+    }
+
+    void applythesetting()
+    {
+        // for bgtoggle
+        if(gamemanger.instance.settingList[0] == "0")
         {
-            manualtoggle.isOn = true;
+            bgtoggle.isOn = false;
         }
-        else{
+        else
+        {
+            bgtoggle.isOn = true;
+        }
+
+        // for slider value
+        soundslider.value = int.Parse(gamemanger.instance.settingList[1]);
+
+        // for shooting check box
+
+        if(gamemanger.instance.settingList[2] == "b")
+        {
             buttontoggle.isOn = true;
         }
-        diffcultyDD.value = PlayerPrefs.GetInt("diffculty",1);
+        else 
+        {
+            manualtoggle.isOn = true; 
+        }
+
+        // for diffculty
+        string d = gamemanger.instance.settingList[3];
+        int opitionIndex = diffcultyDD.options.FindIndex(option => option.text == d); 
+        diffcultyDD.value = opitionIndex;
+        
+
     }
 
-    void Update()
+    void savethesitting()
     {
-        /*bgtoggle.onValueChanged.AddListener(() =>{
-            if(bgtoggle.isOn)
-            {
-                PlayerPrefs.SetInt("bgmusic",1);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("bgmusic",0);
-            }
-        });
-
-        soundslider.onValueChanged.AddListener(() =>{
-            PlayerPrefs.SetInt("soundlevel",soundslider.value);
-        });
-
-        manualtoggle.onValueChanged.AddListener(() =>{
-            if(manualtoggle.isOn)
-            {
-                PlayerPrefs.SetInt("shootingway",0);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("bgmusic",1);
-            }
-        });
-
-        diffcultyDD.onValueChanged.AddListener(() =>{
-            set("diffculty",gettheindex());
-        });*/
-
-        if(Time.time >= delay)
+        string buttonvalue = ""; 
+        string shootingvalue = "";
+        // for bg
+        if(bgtoggle.isOn)
         {
-            int bgs = PlayerPrefs.GetInt("bgmusic",1);
-            int soundss = PlayerPrefs.GetInt("soundlevel",100);
-            int mt = PlayerPrefs.GetInt("shootingway",1);
-            int DDD = PlayerPrefs.GetInt("diffculty",1);
+            PlayerPrefs.SetString("bgmusic","1");
+            buttonvalue = "1";
+        }
+        else
+        {
+            PlayerPrefs.SetString("bgmusic","0"); 
+            buttonvalue = "0";
+        }
+        
+        // for music
+        string soundsliderValue = ((int) soundslider.value).ToString();
+        PlayerPrefs.SetString("soundlevel", soundsliderValue);
 
-            Debug.Log($"bg: {bgs} | sound: {soundss} | manual: {mt} | DDD: {DDD}");
-            delay = Time.time + 10;
+        // for shooting mothod
+        if(manualtoggle.isOn)
+        {
+            PlayerPrefs.SetString("shootingway","m");
+            shootingvalue = "m";
+        }
+        else if(buttontoggle.isOn)
+        {
+            PlayerPrefs.SetString("shootingway","b");
+            shootingvalue = "b";
+        }
+
+        // for diffculty
+        string d = diffcultyDD.captionText.text;
+        PlayerPrefs.SetString("diffculty",d);
+
+        // changing the value of the setting list in the gamemanager
+        gamemanger.instance.settingList = new List<string>{buttonvalue,soundsliderValue,shootingvalue,d};
+
+        // making a dict of the settings
+        settingdict = showsetttings();
+        foreach(var item in settingdict)
+        {
+            Debug.Log(item);
         }
     }
 
-    public void forbgtoggle()
+    Dictionary<string,string> showsetttings()
     {
-        int a = bgtoggle.isOn ? 1:0;
-        PlayerPrefs.SetInt("bgmusic",a);
-        PlayerPrefs.Save();
-    }
-
-    public void forsoundslider()
-    {
-        set("soundlevel",(int)soundslider.value);
-    }
-
-    public void formanual(string name)
-    {
-        if(name =="b")
-        {
-            PlayerPrefs.SetInt("shootingway",1);
-            Debug.Log("gta");
-            PlayerPrefs.Save();
-        }
-        else if(name == "m")
-        {
-            PlayerPrefs.SetInt("shootingway",0);
-            PlayerPrefs.Save();
-        }
-    }
-
-    public void fordiffculty()
-    {
-        set("diffculty",gettheindex());
-    }
-
-
-    void set(string name,int number)
-    {
-        PlayerPrefs.SetInt(name,number);
-        PlayerPrefs.Save();
-    }
-
-    int gettheindex()
-    {
-        if(diffcultyDD.options.Count > 0 && diffcultyDD.value >=0)
-        {
-            int index = diffcultyDD.value;
-            return index;
-        }
-        return 0;
+        settingdict.Clear();
+        string bg = PlayerPrefs.GetString("bgmusic","1").ToString();
+        string sl = PlayerPrefs.GetString("soundlevel","100").ToString();
+        string sw = PlayerPrefs.GetString("shootingway","b").ToString();
+        string dc = PlayerPrefs.GetString("diffculty","easy").ToString();
+        settingdict.Add("bgmusic",bg);
+        settingdict.Add("soundlevel",sl);
+        settingdict.Add("shootingway",sw);
+        settingdict.Add("diffculty",dc);
+        return settingdict;
     }
 }

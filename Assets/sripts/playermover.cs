@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class playermover : MonoBehaviour
 {
+    public static playermover instance;
     public bool Deid = false;
     public bool doublekillscore = false;
     public bool shootontapping;
@@ -42,13 +43,14 @@ public class playermover : MonoBehaviour
     [SerializeField] private float formuchtime;
     [SerializeField] private float rateoffire; // 1f
     [SerializeField] private float dalayBetweenjump;
-    [SerializeField] private float dalayBetweentpartlicehit;
+    [SerializeField] private float dalayBetweentpartlicehit;// diffcult var
+    [SerializeField] private float diffcultypoints;
     
-    [SerializeField] private int greenEnemyHit;
-    [SerializeField] private int redEnemyHit;
-    [SerializeField] private int GhostHit;
-    [SerializeField] private int missileHit;
-    [SerializeField] private int partclieHit;
+    [SerializeField] private int greenEnemyHit; // diffcult var
+    [SerializeField] private int redEnemyHit; // diffcult var
+    [SerializeField] private int GhostHit; // diffcult var
+    [SerializeField] private int missileHit; // diffcult var
+    [SerializeField] private int partclieHit; // diffcult var
     [SerializeField] private int jumpleft = 2;
     [SerializeField] private int reward;
 
@@ -61,6 +63,7 @@ public class playermover : MonoBehaviour
     [SerializeField] private string ghost;
     [SerializeField] private string particleTag;
     [SerializeField] private string missileTag;
+    private string diffcultystr;
 
     // non-serializeField variables
     private const int maxHealth = 100;
@@ -76,6 +79,87 @@ public class playermover : MonoBehaviour
     private bool isGround = true;
     private bool shouldbejumping = false;//input of jumping button
 
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        string bs = PlayerPrefs.GetString("shootingway","b"); // for the opitimizetion purpose the gamemanger is not used
+        string diffcultystr = PlayerPrefs.GetString("diffculty","Easy"); // for diffcult
+        Debug.Log(bs);
+
+        if(bs == "b")
+        {
+            shootontapping = false;
+        }
+        else if(bs == "m")
+        {
+            shootontapping = true;
+        }
+        else
+        {
+            Debug.LogError($"the variable shootontapping is set to wrong value");
+        }
+        Debug.Log(diffcultystr);
+        if(diffcultystr == "Very Easy")//very easy
+        {
+            // delay = 0.75,enemyhits = 15,partilces hit = 5, bits = / 2 , missle = 20
+            dalayBetweentpartlicehit = 0.75f;
+            redEnemyHit = 15;
+            greenEnemyHit = 15;
+            GhostHit = 15;
+            missileHit = 20;
+            partclieHit = 5;
+            diffcultypoints = 0.5f;
+        }
+        else if(diffcultystr == "Easy") // easy
+        {
+            // delay = 0.5,enemyhits = 20,partilces hit = 5 ,bits = /1.5 , missle = 40
+            dalayBetweentpartlicehit = 0.5f;
+            redEnemyHit = 20;
+            greenEnemyHit = 20;
+            GhostHit = 20;
+            missileHit = 40;
+            partclieHit = 5;
+            diffcultypoints = (1/1.5f);
+        }
+        else if(diffcultystr == "Normal") // normal
+        {
+            // dely = 0.25,enemyhits = 30, partilce hit = 10, bits = *1 , missle = 60
+            dalayBetweentpartlicehit = 0.75f;
+            redEnemyHit = 30;
+            greenEnemyHit = 30;
+            GhostHit = 30;
+            missileHit = 60;
+            partclieHit = 10;
+            diffcultypoints = 1;
+        }
+
+        else if(diffcultystr == "Hard") // hard
+        {
+            //delay = 0.1,enemyhits = 40 , partilce hit = 20 ,bits = *2 , misssle = 90
+            dalayBetweentpartlicehit = 0.75f;
+            redEnemyHit = 15;
+            greenEnemyHit = 15;
+            GhostHit = 15;
+            missileHit = 90;
+            partclieHit = 20;
+            diffcultypoints = 2;
+        }
+        else if(diffcultystr == "Asian")
+        {
+            Debug.LogWarning("the var diffculty is set to asian but gameplayScene is opened");
+        }
+        else
+        {
+            Debug.LogWarning("the var diffculty is not set to correct value the current value"+diffcultystr);
+        }
+    }
     void Start()
     {
         mainc = Camera.main;//getting the main camera referce
@@ -268,7 +352,10 @@ public class playermover : MonoBehaviour
             joystick_cover.SetActive(false);
         }
     }
-
+    // int sdf = (score.finalscores * diffcultypoints);
+    // int dsds = (int)(sdf * (score.speicalkills + score.normalkills)/100);
+    
+    //Debug.Log(dsds);
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(missileTag))
@@ -358,7 +445,7 @@ public class playermover : MonoBehaviour
         }
         if(stopwatchforpartlices == 0)
         {
-            stopwatchforpartlices = Time.time + dalayBetweentpartlicehit;
+            stopwatchforpartlices = Time.time + dalayBetweentpartlicehit;// this can be used  ---------------------------
         }
         
         if (other.gameObject.CompareTag(particleTag) && Time.time >= stopwatchforpartlices)
@@ -510,7 +597,7 @@ public class playermover : MonoBehaviour
 
     void givereward()
     {
-        reward = (int)(score.finalscores * (score.speicalkills + score.normalkills)/100);
+        reward = (int)((score.finalscores * diffcultypoints) * (score.speicalkills + score.normalkills)/100);
         bitsgiven = reward;
         reward += PlayerPrefs.GetInt("bitcoins",0);
         PlayerPrefs.SetInt("bitcoins",reward);

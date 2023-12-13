@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class tutorailmanager : MonoBehaviour
 {
@@ -8,28 +10,49 @@ public class tutorailmanager : MonoBehaviour
     [SerializeField] private GameObject[] messages;
     [SerializeField] private GameObject[] joystick;
     [SerializeField] private GameObject[] jump;
-    [SerializeField] private GameObject[] shoot;
+    [SerializeField] private GameObject[] buttonS;
+    [SerializeField] private GameObject[] manualS;
     [SerializeField] private GameObject[] health;
     [SerializeField] private GameObject[] score;
     [SerializeField] private GameObject[] enemy;
+    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject dummyenemy;
     [SerializeField] private GameObject upperimage;
     [SerializeField] private GameObject lowerimage;
+    [SerializeField] private GameObject thatonearrow;
     private bool joystickbool = true;
     private bool jumpbool = true;
     private bool shootbool = true;
+    private bool maunalshootbool = true;
     private int a = 0;
     [SerializeField] private float delay;
 
     void Start()
     {
+        if(PlayerPrefs.GetString("shootingway","b") == "b")
+        {
+            text.text = "press shoot button to fire ";
+            Debug.Log("press button");
+        }
+        else
+        {
+            text.text = "tap on the enemy to fire ";
+            Debug.Log("press tap");
+        }
         // start displaying the message after n seconds
         Invoke("startingmessage",2.0f);
     }
 
     void Update()
     {
-        
+        if(dummyenemy == null && maunalshootbool)
+        {
+            alltheelementofamessage(manualS,false);
+            stacticmessageson = true;
+            shootbool = false;
+            lowerimage.SetActive(true);
+            maunalshootbool = false;
+        }
         // countine the message that have no button atteched
     }
 
@@ -55,16 +78,33 @@ public class tutorailmanager : MonoBehaviour
         if(jumpbool)
         {
             alltheelementofamessage(jump,false);
-            alltheelementofamessage(shoot,true);
+            alltheelementofamessage(buttonS,true);
             jumpbool = false;
         }
+    }
+
+    public void killmeathod()
+    {
+        if(PlayerPrefs.GetString("shootingway","b") == "b"){
+            shootbutton();
+        }
+        else
+        {
+            alltheelementofamessage(buttonS,false);
+            manualshoot();
+            thatonearrow.SetActive(false);
+        }
+    }
+    public void manualshoot()
+    {
+        maunalshootbool = true;
     }
 
     public void shootbutton()
     {
         if(dummyenemy == null && shootbool)
         {
-            alltheelementofamessage(shoot,false);
+            alltheelementofamessage(buttonS,false);
             stacticmessageson = true;
             shootbool = false;
             lowerimage.SetActive(true);

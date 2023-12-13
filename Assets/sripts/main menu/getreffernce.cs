@@ -15,6 +15,16 @@ public class getreffernce : MonoBehaviour
         audiomanager.instance.stop(soundname);
     }
 
+    public void onbuttonpressedpause(string soundname)
+    {
+        audiomanager.instance.pause(soundname);
+    }
+
+    public void onbuttonpressedresume(string soundname)
+    {
+        audiomanager.instance.resume(soundname);
+    }
+
     public void mainmaenu()
     {
         gamemanger.instance.loadmainmenuscene();
@@ -23,6 +33,11 @@ public class getreffernce : MonoBehaviour
     public void gameon()
     {
         gamemanger.instance.loadgameplayscene();
+    }
+
+    public void startMMbutton()
+    {
+        gamemanger.instance.gamestartbutton();
     }
 
     public void toturialr()

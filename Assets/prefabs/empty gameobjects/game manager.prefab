@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player1: 
+  Gvolume: 0
+  shootingtype: 0
+  diffculty: 
   panthersoldout: 0
   gameplayScene: space
   mainmenuScene: mainmenu
@@ -52,3 +55,4 @@ MonoBehaviour:
   shopScene: store
   settingsScene: settings
   manualScene: manual
+  asianScene: asian
