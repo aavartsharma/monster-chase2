@@ -71,11 +71,13 @@ public class settings : MonoBehaviour
         if(bgtoggle.isOn)
         {
             PlayerPrefs.SetString("bgmusic","1");
+            audiomanager.instance.playthbg();
             buttonvalue = "1";
         }
         else
         {
             PlayerPrefs.SetString("bgmusic","0"); 
+            audiomanager.instance.stopthebg();
             buttonvalue = "0";
         }
         
@@ -108,6 +110,7 @@ public class settings : MonoBehaviour
         {
             Debug.Log(item);
         }
+        
     }
 
     Dictionary<string,string> showsetttings()

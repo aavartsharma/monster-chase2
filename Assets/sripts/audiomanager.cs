@@ -39,12 +39,12 @@ public class audiomanager : MonoBehaviour
 
     public void stopthebg()
     {
-        stop("bg");
+        pause("bg");
     }
 
     public void playthbg()
     {
-        play("bg");
+        resume("bg");
     }
 
     public void resumethebg()

@@ -67,10 +67,9 @@ public class missile : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject == player.gameObject || collision.gameObject.CompareTag(phycalgroundTag))
+        if(collision.gameObject == player.gameObject)
         {
             Instantiate(hittingeffect,transform.position,Quaternion.identity);
-            Destroy(gameObject);
             return;
         }
         Debug.Log(collision.gameObject);

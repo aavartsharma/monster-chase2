@@ -52,12 +52,24 @@ CHECKLIST
 +	49.) missile is going doward and not coming to the player
 -	50.) make bullet skin
 +	51.) add quit game broad
--	52.) player should we reward to come in the no go ground
-	53.) for rateing
-	54.)
+-	52.) player should be rewarded to come in the no go ground
+-	53.) for rateing
+-	54.) moving stage or ground
+-	55.) make game more exiting 
+		1.) add more pickups
+		2.) add use of currency
+		3.) bits between the game
+		4.)  
 
 
 
+-----------------------------------------------------------------------------------------------------------------------
+today delyed
+
+	1.) tutotrail arrow
+	2.) UI is cliping
+	
+-----------------------------------------------------------------------------------------------------------------------
 
 other scenes
 	1.) MAin Menu (MM)
