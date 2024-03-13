@@ -31,6 +31,7 @@ public class playermover : MonoBehaviour
     [SerializeField] private Rigidbody2D playersr;
     [SerializeField] private Vector3 damage_text_position;
     [SerializeField] private Animator playersanime;
+    [SerializeField] private Animator playerHealthBar;
     [SerializeField] private SpriteRenderer sprit;
     [SerializeField] private Joystick joystick;
     [SerializeField] private scorestexts score;
@@ -165,6 +166,7 @@ public class playermover : MonoBehaviour
         mainc = Camera.main;//getting the main camera referce
         health = maxHealth;
         healthbars.SetMaxhealth(maxHealth);
+        playerHealthBar.SetInteger("health",health);
         blackplayer = (PlayerPrefs.GetString("currentplayer","garo") != "garo");
         if(!shootontapping)
         {
@@ -192,6 +194,7 @@ public class playermover : MonoBehaviour
             givereward();
             return;
         }
+        
         if (health <= 0)// player is deid
         {
             audioscript.playaudio(4);
@@ -351,6 +354,7 @@ public class playermover : MonoBehaviour
             playersanime.SetInteger(moves, 1);
             joystick_cover.SetActive(false);
         }
+        playerHealthBar.SetInteger("health",health);
     }
     // int sdf = (score.finalscores * diffcultypoints);
     // int dsds = (int)(sdf * (score.speicalkills + score.normalkills)/100);
@@ -366,8 +370,8 @@ public class playermover : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("ground2"))
         {
-            audioscript.playaudio(2);
-            isGround = true;
+            // audioscript.playaudio(2);
+            // isGround = true;
         }
         if (collision.gameObject.CompareTag(redenemy))
         {
@@ -393,29 +397,17 @@ public class playermover : MonoBehaviour
         }
     }
 
-    /*void OnCollisionStay2D(Collision2D collision)
-    {
-        if (Deid)
-        {
-            return;
-        }
-        if(stopwatchforjump == 0)
-        {
-            stopwatchforjump = Time.time + dalayBetweenjump;
-        }
-
-        if(Time.time >= stopwatchforjump)
-        {
-            
-            stopwatchforjump = 0f;
-        }
-    }*/
-
     void OnTriggerEnter2D(Collider2D colliders)
     {
         if(Deid)
         {
             return;
+        }
+
+        if(colliders.gameObject.CompareTag("groundUp"))
+        {
+            audioscript.playaudio(2);
+            isGround = true;
         }
         if (colliders.gameObject.CompareTag(twox))
         {
@@ -437,6 +429,23 @@ public class playermover : MonoBehaviour
         }
     }
 
+    /*void OnCollisionStay2D(Collision2D collision)
+    {
+        if (Deid)
+        {
+            return;
+        }
+        if(stopwatchforjump == 0)
+        {
+            stopwatchforjump = Time.time + dalayBetweenjump;
+        }
+
+        if(Time.time >= stopwatchforjump)
+        {
+            
+            stopwatchforjump = 0f;
+        }
+    }*/
     void OnParticleCollision(GameObject other)
     {
         if (Deid)
@@ -619,7 +628,7 @@ public class playermover : MonoBehaviour
     {
         if (Time.time <= timesone)
         {
-            return ;
+            return;
         }
         shootparticle(shootbutton());
         timesone = Time.time + rateoffire;

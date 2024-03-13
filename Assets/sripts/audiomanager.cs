@@ -44,12 +44,18 @@ public class audiomanager : MonoBehaviour
 
     public void playthbg()
     {
-        resume("bg");
+        if(gamemanger.instance.settingList[0] == "1")
+        {
+            resume("bg");
+        }
     }
 
     public void resumethebg()
     {
-        resume("bg");
+        if(gamemanger.instance.settingList[0] == "1")
+        {
+            resume("bg");
+        }
     }
 
     public void pausethebg()

@@ -1,0 +1,16 @@
+5.) 5 smash blocks toturial
+6.) Make new arrow moving system
+8.) player manual should also give feedback
+9.) in toturial scene player show know that he has to kill the dummy viper
+11.) When a message is displayed the background should Fade
+12.) in game scene counting should stop when pressed the pause menu
+1.) Fade animation in every scene switch   [v]
+2.) give feedback on every button pressed   [v]
+4.) Add section to buy other bullets in store scene   [v]
+5.) recreate the toturial   [v]
+6.) The health bar should flash when health is low      [v]
+8.) player manual should also give feedback   [v]
+12.) in game scene counting should stop when pressed the pause menu
+15.) 5 smash blocks toturial  [v]
+16.) Make new arrow moving system   [v]
+18.) audio should be better in the game

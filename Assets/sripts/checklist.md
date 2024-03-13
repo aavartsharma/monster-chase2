@@ -11,7 +11,7 @@ CHECKLIST
 +	09.) ghost goes far from player sometimes
 +	10.) when enemy is too close you can't destroy them
 +	11.) jumping on enemy head destroy them
--	12.) make the blust of the player died more better
++	12.) make the blust of the player died more better
 -	13.) every prtilce should be round in shape
 +	14.) ui clips on the top of screen
 +	15.) make pause menu
@@ -25,14 +25,14 @@ CHECKLIST
 +	22.) better code of player script
 -	23.) delete useless assest
 +	24.) button for shooting
--	25.) player deid animation is slow
++	25.) player deid animation is slow
 +	26.) second player animation and more
 -	27.) anylitics,ads,multiplayer
--	28.) add the websites url
+*	28.) add the websites url
 +	29.) the rocket ui blocks the touch on the rocket gameobject 
 +	30.) make a manual that will include all the information of enemys
 +	31.) text on top of the player that tell damage taken by player 
--	32.) doublejump and smooth dash from on ground to other
+*	32.) doublejump and smooth dash from on ground to other
 +	33.) ghost gets stuck at very hight 
 +	34.) when hit highscore the ui doesn't fillfully 
 +	35.) the score gets double when x2 but that gone after that
@@ -46,7 +46,7 @@ CHECKLIST
 +	43.) sounds to the pause menu
 +	44.) missile logic
 +	45.) add a effector to that player so the enemy get little bit away from the player
--	46.) add Double jump
+*	46.) add Double jump
 +	47.) remove the other sound 
 +	48.) make a rewarding formula for the game and inplmant it
 +	49.) missile is going doward and not coming to the player
@@ -61,15 +61,64 @@ CHECKLIST
 		3.) bits between the game
 		4.)  
 
+-----------------------------------------------------------------------------------------------------------------------
+People Review 
 
++	1.) Give some margin aroung buttons 
++	2.) Screen UI is clipping off
++	3.) Give animation on Play button
+	4.) Jumping bug 
+	5.) 5 smash blocks toturial
+	6.) Make new arrow moving system
 
 -----------------------------------------------------------------------------------------------------------------------
-today delyed
+all new review (mine)
 
-	1.) tutotrail arrow
-	2.) UI is cliping
+	1.) Fade animation in every scene switch   [v]
+	2.) give feedback on every button pressed    [v]
+	3.) The current charcter selected should be seen in main menu   [v]
+	4.) Add section to buy other bullets in store scene   [v]
+	5.) recreate the toturial   [v]
+	6.) The health bar should flash when health is low      [v]
+	7.) "with" in manual scene is wrong [v]
+	8.) player manual should also give feedback
+	9.) in toturial scene player show know that he has to kill the dummy viper
+	10.) The Spelling of "More" is wrong in toturial
+	11.) When a message is displayed the background should Fade
+	12.) in game scene counting should stop when pressed the pause menu
++	13.) when player destroy a ground it should respawn as the ground leaves the camera view
+	14.) every viper show as it's own killed particle system
+
+-----------------------------------------------------------------------------------------------------------------------
+V(2.2.3)
+	1.) Fade animation in every scene switch   [v]
+	2.) give feedback on every button pressed   [v]
+	3.) The current charcter selected should be seen in main menu   [v]
+	4.) Add section to buy other bullets in store scene   [v]
+	5.) recreate the toturial   [v]
+	6.) The health bar should flash when health is low      [v]
++	7.) "with" in manual scene is wrong [v]
+	8.) player manual should also give feedback   [v]
++	9.) in toturial scene player show know that he has to kill the dummy viper [v]
++	10.) The Spelling of "More" is wrong in toturial  [v]
+	11.) When a message is displayed the background should Fade 
+	12.) in game scene counting should stop when pressed the pause menu
++	13.) when player destroy a ground it should respawn when the ground leaves the camera view
+	14.) Jumping bug [v]
+	15.) 5 smash blocks toturial  [v]
+	16.) Make new arrow moving system   [v]
++	17.) every viper show as it's own killed particle system
+	18.) audio should be better in the game
+
 	
 -----------------------------------------------------------------------------------------------------------------------
+Test the features
+	1.) audio on the every change scene 
+	2.) how ground is destroy on the collisions
+	3.) vipers show it's own particle system
+	4.) the animation on main manu is sync with animation on the main menu
+	5.) option button feedback
+	6.)  
 
 other scenes
 	1.) MAin Menu (MM)
@@ -78,7 +127,7 @@ other scenes
 	+	3.) animation on MM
 	+	4.) add all the scene changer in the buttons
 	+	5.) make space for the manual in the opition
-	-	6.) make a player stats and add it to MM
+	-	6.) make a player stats and add it to MainMenu
 
 	2.) manual
 	-	1.) plyer will see only the enemy he has seen
@@ -95,7 +144,7 @@ other scenes
 	4.) toturial
 	+	1.) player will expernice this scene when starting the game for the first time 
 	+	2.) make all the instraction that should be given to the player
-	-	3.) make a pop up question to player does he need a toturial if no make the maingame next scene
+	*	3.) make a pop up question to player does he need a toturial if no make the maingame next scene
 	+	4.) add logic to the gameobjects 
 	-	5.) button sitting crashes the tutorail
 

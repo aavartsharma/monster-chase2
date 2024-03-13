@@ -19,6 +19,7 @@ TagManager:
   - playersaudio
   - ground2
   - playerfeettag
+  - groundUp
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,21 @@
+the dict is not coming in the inspactor
+CHECKLIST
+    1.) GameScene
+        1.) every prtilce should be round in shape
+        2.) tap on left side of screen will make the joystick follow (only for shoot button)
+        3.) make bullet skin
+        4.) player should be rewarded to come in the no go ground
+        5.) Jumping bug
+        6.) moving stage or ground
+        7.) Make new arrow moving system
+    2.) MainMenu
+        1.) make a player stats and add it to MainMenu
+        2.) for rateing
+    3.) settings
+        1.)
+    4.) Toturial
+        1.) 5 smash blocks toturial
+    5.) Manual 
+        1.)
+    6.) Store
+        1.)

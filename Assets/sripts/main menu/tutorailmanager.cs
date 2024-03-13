@@ -6,111 +6,138 @@ using TMPro;
 
 public class tutorailmanager : MonoBehaviour
 {
-    private bool stacticmessageson;
+    // private bool stacticmessageson;
     [SerializeField] private GameObject[] messages;
     [SerializeField] private GameObject[] joystick;
     [SerializeField] private GameObject[] jump;
     [SerializeField] private GameObject[] buttonS;
     [SerializeField] private GameObject[] manualS;
+    [SerializeField] private GameObject[] ground_distroy;
     [SerializeField] private GameObject[] health;
     [SerializeField] private GameObject[] score;
     [SerializeField] private GameObject[] enemy;
+    [SerializeField] private GameObject[] setting;
+    [SerializeField] private GameObject[] exit;
+    [SerializeField] private Button jumpbuttonclick;
+    [SerializeField] private Button shoot;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject dummyenemy;
     [SerializeField] private GameObject upperimage;
     [SerializeField] private GameObject lowerimage;
-    [SerializeField] private GameObject thatonearrow;
-    private bool joystickbool = true;
-    private bool jumpbool = true;
-    private bool shootbool = true;
-    private bool maunalshootbool = true;
-    private int a = 0;
+    [SerializeField] private GameObject fadeimage;
+    private bool isbutton = true;
+    // private bool joystickbool = true;
+    // private bool jumpbool = true;
+    // private bool shootbool = true;
+    // private bool maunalshootbool = true;
     [SerializeField] private float delay;
 
     void Start()
     {
         if(PlayerPrefs.GetString("shootingway","b") == "b")
         {
-            text.text = "press shoot button to fire ";
-            Debug.Log("press button");
+            text.text = "press shoot button to fire on vipers";
+            Debug.Log("button is active in the settings");
+            isbutton = true;
         }
         else
         {
-            text.text = "tap on the enemy to fire ";
-            Debug.Log("press tap");
+            text.text = "tap on the enemy to fire on vipers";
+            Debug.Log("manual firing is enables in the settings");
+            isbutton = false;
         }
-        // start displaying the message after n seconds
-        Invoke("startingmessage",2.0f);
+        joystickbutton();
     }
-
-    void Update()
-    {
-        if(dummyenemy == null && maunalshootbool)
-        {
-            alltheelementofamessage(manualS,false);
-            stacticmessageson = true;
-            shootbool = false;
-            lowerimage.SetActive(true);
-            maunalshootbool = false;
-        }
-        // countine the message that have no button atteched
-    }
-
-    void startingmessage()// for starting a the first message
+    
+    public void joystickbutton()// for starting a the first message
     {
         upperimage.SetActive(true);
         alltheelementofamessage(joystick,true);
     }
 
-    public void joystickbutton()
+    public void jumpbutton() // for joystickbutton
     {
-        if(joystickbool)
-        {
-            alltheelementofamessage(joystick,false);
-            alltheelementofamessage(jump,true);
-            joystickbool = false;
-        }
-        
+        alltheelementofamessage(joystick,false);
+        alltheelementofamessage(jump,true);
     }
 
-    public void jumpbutton()
+    public void shootway()
     {
-        if(jumpbool)
+        if(isbutton)
         {
-            alltheelementofamessage(jump,false);
-            alltheelementofamessage(buttonS,true);
-            jumpbool = false;
-        }
-    }
-
-    public void killmeathod()
-    {
-        if(PlayerPrefs.GetString("shootingway","b") == "b"){
             shootbutton();
         }
         else
         {
-            alltheelementofamessage(buttonS,false);
-            manualshoot();
-            thatonearrow.SetActive(false);
-        }
-    }
-    public void manualshoot()
-    {
-        maunalshootbool = true;
-    }
-
-    public void shootbutton()
-    {
-        if(dummyenemy == null && shootbool)
-        {
-            alltheelementofamessage(buttonS,false);
-            stacticmessageson = true;
-            shootbool = false;
-            lowerimage.SetActive(true);
+            manualslide();
         }
     }
 
+    void shootbutton()
+    {
+        alltheelementofamessage(jump,false);
+        alltheelementofamessage(buttonS,true);
+    }
+
+    void manualslide()
+    {
+        alltheelementofamessage(jump,false);
+        alltheelementofamessage(manualS,true);
+    }
+
+    public void grounddistroy()
+    {
+        alltheelementofamessage(buttonS,false);
+        alltheelementofamessage(manualS,false);
+        alltheelementofamessage(ground_distroy,true);
+        upperimage.SetActive(false);
+    }
+    
+    void health_info()
+    {
+        lowerimage.SetActive(true);
+        alltheelementofamessage(ground_distroy,false);
+        alltheelementofamessage(health,true);
+        Invoke("score_info",delay);
+    }
+
+    void score_info()
+    {
+        alltheelementofamessage(health,false);
+        alltheelementofamessage(score,true);
+        Invoke("enemy_info",delay);
+    }
+
+    void enemy_info()
+    {
+        alltheelementofamessage(score,false);
+        alltheelementofamessage(enemy,true);
+        Invoke("setting_info",delay);
+    }
+    void setting_info()
+    {
+        alltheelementofamessage(enemy,false);
+        alltheelementofamessage(setting,true);
+        Invoke("exit_info",delay);
+    }
+    void exit_info()
+    {
+        alltheelementofamessage(setting,false);
+        alltheelementofamessage(exit,true);
+        Invoke("fade_event",delay);
+    }
+    void fade_event()
+    {
+        alltheelementofamessage(exit,false);
+        Invoke("fadescreen",2f);
+        gamemanger.instance.loadgamemainmenu();
+    }
+    void fadescreen()
+    {
+        fadeimage.SetActive(true);
+    }
+
+    // trun on or off the array of gameObject
     void alltheelementofamessage(GameObject[] themessageelement,bool turnon)
     {
         foreach (GameObject obj in themessageelement)
@@ -126,26 +153,6 @@ public class tutorailmanager : MonoBehaviour
             }
             obj.SetActive(turnon);
         }
-    }
-
-    public void doittrue(){
-        stacticmessageson=true;
-    }
-
-    public void lowermessages()
-    {
-        lowerimage.SetActive(true);
-        if(a >= messages.Length)
-        {
-            stacticmessageson = false;
-            return;
-        }
-        if(a-1 > 0)
-        {
-            messages[a-1].SetActive(false);
-        }
-        messages[a].SetActive(true);
-        a++;
     }
 
 

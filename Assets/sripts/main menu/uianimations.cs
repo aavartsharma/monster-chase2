@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class uianimations : MonoBehaviour
 {
-    [SerializeField] private GameObject ghost,re,b1,b2,opition;
+    [SerializeField] private GameObject ghost,re,b1,b2,opition,opitionmenu;
     private Animator a;
     void Start()
     {
@@ -66,8 +66,33 @@ public class uianimations : MonoBehaviour
         a.SetInteger("state",3);
     }
 
+    public void on4()
+    {
+        a.SetInteger("state",4);
+    }
+
     void opitionshower()
     {
         opition.SetActive(true);
+    }
+
+    void opitionhider()
+    {
+        opition.SetActive(false);
+    }
+
+    void opitionmenuhider()
+    {
+        opitionmenu.SetActive(false);
+    }
+
+    void opitionmenushower()
+    {
+        opitionmenu.SetActive(true);
+    }
+
+    void exittogamescene()
+    {
+        gamemanger.instance.gamestartbutton();
     }
 }

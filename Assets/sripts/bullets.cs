@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class bullets : MonoBehaviour
 {
+    [SerializeField] private string[] enemytag;
+    [SerializeField] private GameObject[] particles;
     [SerializeField] private GameObject heart;
     [SerializeField] private GameObject twox;
     [SerializeField] private GameObject hiteffect;// the particle that should appear
@@ -25,6 +27,23 @@ public class bullets : MonoBehaviour
         numberofenemykill = GameObject.FindWithTag(texttag).GetComponent<scorestexts>(); // will give the text gameobject refernce
         Destroy(gameObject,10f);
     }
+
+    GameObject findCorrectPartile(string tag,Vector2 position) // find and instances the correct particle gameobject
+    {  
+        int index  = 0;
+        //ghost,greenenemy,redenemy,missile
+        foreach (var item in enemytag)
+        {
+            if(tag == item)
+            {
+                GameObject particle = particles[index];
+                particle = Instantiate(particle,position,Quaternion.identity);
+                return particle;
+            }
+            index++;
+        }
+        return hiteffect;
+    }
     void OnTriggerStay2D(Collider2D collider)
     {
         if(collider.gameObject.CompareTag(twoxTag) || collider.gameObject.CompareTag(heartTag))
@@ -41,7 +60,8 @@ public class bullets : MonoBehaviour
                 int speicalkilling = numberofenemykill.speicalkills;
                 int normalkilling = numberofenemykill.normalkills;
                 Vector2 hitonenemy = collider.transform.position;
-                GameObject particle = Instantiate(hiteffect,hitonenemy,Quaternion.identity);
+                string Etag = collider.gameObject.tag;
+                GameObject particle = findCorrectPartile(Etag,hitonenemy);// Instantiate(hiteffect,hitonenemy,Quaternion.identity);
                 if(Random.Range(1,4) == 1)
                 {
                     if(Random.Range(1,3) == 1)

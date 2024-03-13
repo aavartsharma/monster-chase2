@@ -39,4 +39,8 @@ public class gameoverbroad : MonoBehaviour
         }*/
 
     }
+    void Update()
+    {
+        rewardgiven.text = playermover.instance.bitsgiven.ToString();
+    }
 }
