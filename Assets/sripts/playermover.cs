@@ -37,6 +37,8 @@ public class playermover : MonoBehaviour
     [SerializeField] private scorestexts score;
     [SerializeField] private playeraudio audioscript;
 
+    [SerializeField] private bool chargeUpMode = false;
+
     [SerializeField] private float Speed;
     [SerializeField] private float onairspeed;
     [SerializeField] private float jumpspeed;
@@ -52,18 +54,26 @@ public class playermover : MonoBehaviour
     [SerializeField] private int GhostHit; // diffcult var
     [SerializeField] private int missileHit; // diffcult var
     [SerializeField] private int partclieHit; // diffcult var
-    [SerializeField] private int jumpleft = 2;
     [SerializeField] private int reward;
+    [SerializeField] private int PickUpsRewards;
 
     [SerializeField] private string moves;
     [SerializeField] private string blackskin;
     [SerializeField] private string twox;
     [SerializeField] private string heart;
+    [SerializeField] private string BitCoinPickUpsObject;
+    [SerializeField] private string ChargeUpObject;
     [SerializeField] private string greenenemy;
     [SerializeField] private string redenemy;
     [SerializeField] private string ghost;
     [SerializeField] private string particleTag;
     [SerializeField] private string missileTag;
+    private enum PlayerStates
+    {
+        normal,
+        chargeUp,
+    }
+    private PlayerStates state;
     private string diffcultystr;
 
     // non-serializeField variables
@@ -92,7 +102,6 @@ public class playermover : MonoBehaviour
         }
         string bs = PlayerPrefs.GetString("shootingway","b"); // for the opitimizetion purpose the gamemanger is not used
         string diffcultystr = PlayerPrefs.GetString("diffculty","Easy"); // for diffcult
-        Debug.Log(bs);
 
         if(bs == "b")
         {
@@ -158,7 +167,7 @@ public class playermover : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("the var diffculty is not set to correct value the current value"+diffcultystr);
+            Debug.LogError("the var diffculty is not set to correct value the current value is "+diffcultystr);
         }
     }
     void Start()
@@ -167,6 +176,7 @@ public class playermover : MonoBehaviour
         health = maxHealth;
         healthbars.SetMaxhealth(maxHealth);
         playerHealthBar.SetInteger("health",health);
+        state = PlayerStates.normal;
         blackplayer = (PlayerPrefs.GetString("currentplayer","garo") != "garo");
         if(!shootontapping)
         {
@@ -241,18 +251,8 @@ public class playermover : MonoBehaviour
             pos.x += Speed * Time.deltaTime;
             transform.position = pos;
         }
-        if (isGround && shouldbejumping/* && jumpleft > 0*/) // checking should player jump if the button is called
+        if (isGround && shouldbejumping) // checking should player jump if the button is called
         {
-            // if(stopwatchforjump == 0)
-            // {
-            //     stopwatchforjump = Time.time + dalayBetweenjump;
-            // }
-
-            // if(Time.time >= stopwatchforjump)
-            // {
-                
-            //     stopwatchforjump = 0f;
-            // }
             jumper();
             shouldbejumping=false;
         }
@@ -320,33 +320,6 @@ public class playermover : MonoBehaviour
                 return;
             }
             
-
-            // the switched code of shoot
-            #region swiched_code       
-            // switch (touch.phase)
-            // {
-            //     case TouchPhase.Began:
-
-            //         break;
-
-            //     case TouchPhase.Moved:
-
-            //         break;
-
-            //     case TouchPhase.Ended:
-            //         if(isDragging)
-            //         {
-            //             Vector3 endpoint = Camera.main.ScreenToWorldPoint(touch.position);
-            //             endpoint.z = 0;
-            //             timesone = Time.time + 1f;
-            //             Vector3 inputPosition = Giveintputpos();
-            //             shootparticle(inputPosition);
-            //             aimline.positionCount = 0;
-            //         }
-            //         isDragging = false;
-            //         break;
-            // }
-            #endregion
         }
 
         if (joystickMove == 0f && isGround)
@@ -362,7 +335,53 @@ public class playermover : MonoBehaviour
     //Debug.Log(dsds);
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(missileTag))
+        switch (state)
+        {
+            case PlayerStates.normal:
+                //
+                if (collision.gameObject.CompareTag(missileTag))
+                {
+                    int takendamage = takedamage(missileHit); // missile damage was 50
+                    GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position,Quaternion.identity);
+                    textteller.GetComponent<damagetext>().damage = takendamage;
+                }
+                if (collision.gameObject.CompareTag("ground2"))
+                {
+                    // audioscript.playaudio(2);
+                    // isGround = true;
+                }
+                if (collision.gameObject.CompareTag(redenemy))
+                {
+                    // some damage should be given
+                    int takendamage = takedamage(redEnemyHit);
+                    GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position ,Quaternion.identity);
+                    textteller.GetComponent<damagetext>().damage = takendamage;
+                }
+                if (collision.gameObject.CompareTag(greenenemy))
+                {
+                    // some damage should be given
+                    int takendamage = takedamage(greenEnemyHit); // green enemy damage 1
+                    GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position ,Quaternion.identity);
+                    textteller.GetComponent<damagetext>().damage = takendamage;
+                }
+            
+                if (collision.gameObject.CompareTag(ghost))
+                {
+                    // some damage should be given
+                    int takendamage = takedamage(GhostHit); // ghost damage 1
+                    GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position ,Quaternion.identity);
+                    textteller.GetComponent<damagetext>().damage = takendamage;
+                }
+                Debug.Log("player is at "+state);
+                break;
+            case PlayerStates.chargeUp:
+                Debug.Log("player is gone in "+state);
+                break;
+            default:
+                Debug.LogError("player state is Set to an unknown state");
+                break;
+        }
+        /*if (collision.gameObject.CompareTag(missileTag))
         {
             int takendamage = takedamage(missileHit); // missile damage was 50
             GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position,Quaternion.identity);
@@ -394,7 +413,7 @@ public class playermover : MonoBehaviour
             int takendamage = takedamage(GhostHit); // ghost damage 1
             GameObject textteller = Instantiate(damagetext,transform.position + damage_text_position ,Quaternion.identity);
             textteller.GetComponent<damagetext>().damage = takendamage;
-        }
+        }*/
     }
 
     void OnTriggerEnter2D(Collider2D colliders)
@@ -426,6 +445,17 @@ public class playermover : MonoBehaviour
             addHealth(maxHealth / 2);
             Destroy(colliders.gameObject);
             // health should be fulled
+        }
+        if(colliders.gameObject.CompareTag(BitCoinPickUpsObject))
+        {
+            PickUpsRewards += 20;
+            Destroy(colliders.gameObject);
+        }
+        if(colliders.gameObject.CompareTag(ChargeUpObject))
+        {
+            chargeUpMode = true;
+            state = PlayerStates.chargeUp;
+            Invoke("stateToNormal",7f);
         }
     }
 
@@ -490,9 +520,8 @@ public class playermover : MonoBehaviour
         playersr.AddForce(new Vector2(0f, jumpspeed), ForceMode2D.Impulse);
         playersanime.SetInteger(moves, 3);
         isGround = false;
-        Debug.LogWarning("jumping left: "+jumpleft);
-        
     }
+    
     
     Vector3 shootbutton()
     {
@@ -505,7 +534,7 @@ public class playermover : MonoBehaviour
         foreach (Enemy obj in enemytransform)// looping every enemy
         {
             float xposition = transform.position.x - obj.transform.position.x;// find out the x-axis distance
-            float yposition = transform.position.y - obj.transform.position.y;// find out the x-axis distance
+            float yposition = transform.position.y - obj.transform.position.y;// find out the y-axis distance
             //Debug.Log(obj+"<color=yellow> ("+(int) xposition+" "+(int) yposition+" )</color>");
             if(yposition < 0) // if the y-position is -neg than do it positive
             {
@@ -543,7 +572,10 @@ public class playermover : MonoBehaviour
         return thisvector;
     }
 
-
+    void stateToNormal()
+    {
+        state = PlayerStates.normal;
+    }
     void playerdead() // player when died animation ends
     {
         whendiedGOon[0].SetActive(true);
@@ -606,7 +638,7 @@ public class playermover : MonoBehaviour
 
     void givereward()
     {
-        reward = (int)((score.finalscores * diffcultypoints) * (score.speicalkills + score.normalkills)/100);
+        reward = (int)((score.finalscores * diffcultypoints) * (score.speicalkills + score.normalkills)/100) + PickUpsRewards;
         bitsgiven = reward;
         reward += PlayerPrefs.GetInt("bitcoins",0);
         PlayerPrefs.SetInt("bitcoins",reward);

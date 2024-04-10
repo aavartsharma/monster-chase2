@@ -5,18 +5,15 @@ using UnityEngine;
 public class bullets : MonoBehaviour
 {
     [SerializeField] private string[] enemytag;
+    [SerializeField] private string[] notDestroy;
     [SerializeField] private GameObject[] particles;
-    [SerializeField] private GameObject heart;
-    [SerializeField] private GameObject twox;
+    [SerializeField] private GameObject[] PickUps;
     [SerializeField] private GameObject hiteffect;// the particle that should appear
-    [SerializeField] private playermover playerscripts;
     [SerializeField] private int powerupstime;
-    [SerializeField] private string ground;// groundtag
-    [SerializeField] private string ground2;
     [SerializeField] private string texttag; // texttag
-    [SerializeField] private string untag;
-    [SerializeField] private string heartTag;
-    [SerializeField] private string twoxTag;
+    [SerializeField] private string ground;
+    [SerializeField] private string ground2;
+    private playermover playerscripts;
     private scorestexts numberofenemykill;
     private playeraudio audioofplayer;
 
@@ -46,11 +43,73 @@ public class bullets : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D collider)
     {
-        if(collider.gameObject.CompareTag(twoxTag) || collider.gameObject.CompareTag(heartTag))
+        /*foreach(string Tag in notDestroy)
+        {
+            if(collider.gameObject.CompareTag(ground) || collider.gameObject.CompareTag(ground2))
+            {
+                Destroy(gameObject);
+                return;
+            }
+            if(collider.gameObject.CompareTag(Tag))
+            {
+                return;
+            }
+        }*/
+        foreach (string item in enemytag)
+        {
+            if(collider.gameObject.CompareTag(ground) || collider.gameObject.CompareTag(ground2))
+            {
+                Destroy(gameObject);
+                return;
+            }
+            if(!collider.gameObject.CompareTag(item))
+            {
+                Debug.Log("the item is nkot an enemy");
+                return;
+            }
+        }
+        Debug.Log("the item is an enemy");
+        int speicalkilling = numberofenemykill.speicalkills;
+        int normalkilling = numberofenemykill.normalkills;
+        Vector2 hitonenemy = collider.transform.position;
+        string Etag = collider.gameObject.tag;
+        GameObject particle = findCorrectPartile(Etag,hitonenemy);// Instantiate(hiteffect,hitonenemy,Quaternion.identity);
+        if(Random.Range(1,4) == 1)
+        {
+            int length = PickUps.Length;
+            int randomNumber = Random.Range(0,length-1);
+            GameObject spwanedPickUp = Instantiate(PickUps[randomNumber],hitonenemy,Quaternion.identity);
+            Destroy(spwanedPickUp,powerupstime);
+            /*if(Random.Range(1,3) == 1)
+            {
+                GameObject spawed1=Instantiate(twox,hitonenemy,Quaternion.identity);
+                Destroy(spawed1,powerupstime);
+            }
+            else{
+                GameObject spawed2=Instantiate(heart,hitonenemy,Quaternion.identity);
+                Destroy(spawed2,powerupstime);
+            }*/
+        }
+        audioofplayer.playaudio(5);
+        Destroy(collider.gameObject);
+        if(playerscripts.doublekillscore)
+        {
+            speicalkilling++;
+            numberofenemykill.speicalkills = speicalkilling; 
+        }
+        else
+        {
+            normalkilling++;
+            numberofenemykill.normalkills = normalkilling;
+        }
+        Destroy(particle,3f);
+        Destroy(gameObject);
+        
+        /*if( || collider.gameObject.CompareTag(heartTag))
         {
             return;
         }
-        bool isplayer = collider.gameObject.CompareTag("Player") || collider.gameObject.CompareTag(untag);
+        bool isplayer = collider.gameObject.CompareTag("Player") || collider.gameObject.CompareTag(untaggedObjet);
         if(!isplayer)// if the gameobject is not player
         {
             bool isground = collider.gameObject.CompareTag(ground);
@@ -93,7 +152,7 @@ public class bullets : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-        }
+        }*/
 
        
     }

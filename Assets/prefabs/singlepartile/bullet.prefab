@@ -173,19 +173,27 @@ MonoBehaviour:
   - greenenemy
   - redenemy
   - missile
+  notDestroy:
+  - health
+  - score2
+  - score2
+  - Untagged
+  - groundUp
+  - Player
   particles:
   - {fileID: 1188480734080678365, guid: 3cf169e70d16b8e4a9a74edab4ba51fa, type: 3}
   - {fileID: 6533028513056884428, guid: 15bad990f89b06249af6095274078b88, type: 3}
   - {fileID: 5729501144753164787, guid: 9bb7ad9faf0df684788f4294d9c52240, type: 3}
   - {fileID: 1672081768516593123, guid: e6d8c4ea61bf6de4d937fbf652ad6ac6, type: 3}
+  PickUps:
+  - {fileID: 7720637053431932430, guid: e2f5e118de082564aa2787dd81e41142, type: 3}
+  - {fileID: 2636540737917348389, guid: ea80d585093b85641a3d7e467bcaf6c7, type: 3}
+  - {fileID: 1519800992228285659, guid: 96cf18d0b7152724895d7d8238758b1e, type: 3}
+  - {fileID: 8766336210360033811, guid: b552cc0b798f3f04bb02c690d0831ca3, type: 3}
   heart: {fileID: 2636540737917348389, guid: ea80d585093b85641a3d7e467bcaf6c7, type: 3}
   twox: {fileID: 1519800992228285659, guid: 96cf18d0b7152724895d7d8238758b1e, type: 3}
   hiteffect: {fileID: 159811191547116714, guid: bb2200c253fd6d94f91cf1f568600094, type: 3}
-  playerscripts: {fileID: 0}
   powerupstime: 11
+  texttag: score
   ground: ground
   ground2: ground2
-  texttag: score
-  untag: Untagged
-  heartTag: health
-  twoxTag: score2

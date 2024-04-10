@@ -20,6 +20,8 @@ TagManager:
   - ground2
   - playerfeettag
   - groundUp
+  - chargeUp
+  - Bitcoin
   layers:
   - Default
   - TransparentFX
